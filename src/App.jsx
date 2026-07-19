@@ -497,4 +497,54 @@ export default function App() {
                 className="mt-4 flex items-start gap-2 rounded-md border px-4 py-3 text-sm"
                 style={{ borderColor: "#3A2622", background: "#1F1613", color: "#D6A79A" }}
               >
-                <AlertCircle 
+                <AlertCircle size={15} className="mt-0.5 shrink-0" />
+                {selected.note}
+              </div>
+            )}
+
+            {roleView === "approver" && selected.status === "pending" && (
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => act(selected.id, "approved")}
+                  className="flex items-center gap-1.5 rounded-md px-4 py-2.5 text-sm font-semibold transition hover:brightness-110"
+                  style={{ background: "#4C6B52", color: "#EDEBE3" }}
+                >
+                  <Check size={14} /> Clear for release
+                </button>
+                <button
+                  onClick={() => act(selected.id, "rejected", "Returned for revision.")}
+                  className="flex items-center gap-1.5 rounded-md px-4 py-2.5 text-sm font-semibold transition hover:brightness-110"
+                  style={{ background: "#A8352E", color: "#EDEBE3" }}
+                >
+                  <XIcon size={14} /> Return
+                </button>
+              </div>
+            )}
+
+            {roleView === "ghostwriter" && selected.status === "draft" && (
+              <div className="mt-6">
+                <button
+                  onClick={() => act(selected.id, "pending")}
+                  className="flex items-center gap-1.5 rounded-md px-4 py-2.5 text-sm font-semibold transition hover:brightness-110"
+                  style={{ background: "#B8935F", color: "#0F1626" }}
+                >
+                  <Send size={14} /> Send for approval
+                </button>
+              </div>
+            )}
+
+            {selected.status === "approved" && (
+              <div className="mt-6 flex items-center gap-2 text-sm" style={{ color: "#4C6B52" }}>
+                <ShieldCheck size={15} /> Ready to publish — queued for release.
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="flex h-full items-center justify-center text-sm" style={{ color: "#5B6478" }}>
+            Select a dispatch <ChevronRight size={14} className="ml-1" />
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
